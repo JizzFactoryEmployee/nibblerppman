@@ -1,0 +1,1 @@
+from ..AlgoTrader.collectors import collector_base
