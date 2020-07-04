@@ -3,7 +3,6 @@ import csv
 import pandas as pd 
 import sys
 import time
-from sqlalchemy import create_engine
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 

@@ -12,7 +12,7 @@ class MyHandlerTHETA(FileSystemEventHandler):
 
         event_handler = MyHandlerTHETA()
         observer = Observer()
-        observer.schedule(event_handler, path=r'C:\Users\James\Documents\GitHub\Nibbler\nibbler\trading\collectors\coins\THETA\1m', recursive=False)
+        observer.schedule(event_handler, path=r'/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/THETA/1m', recursive=False)
         observer.start()
 
         try:
@@ -30,13 +30,13 @@ class MyHandlerTHETA(FileSystemEventHandler):
                 print('THETA ACTIVATE GO CORN GO')
                 time.sleep(3)
                 try:
-                    data = pd.read_csv(r'C:/Users/James/Documents/GitHub/Nibbler/nibbler/trading/collectors/coins/THETA/1m/THETA1m.csv')
+                    data = pd.read_csv(r'/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/THETA/1m/THETA1m.csv')
                     print('file exists')
                 #if the file is being populated it wont be found, thus a timeout is needed while it populates
                 except FileNotFoundError:
                     print('still not here, gonna wait longer, waiting five minutes')
                     time.sleep(600)
-                    data = pd.read_csv(r'C:/Users/James/Documents/GitHub/Nibbler/nibbler/trading/collectors/coins/THETA/1m/THETA1m.csv')
+                    data = pd.read_csv(r'/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/THETA/1m/THETA1m.csv')
                     print('five minutes up')
 
                     #set up the main connection
@@ -69,7 +69,7 @@ class MyHandlerTHETA(FileSystemEventHandler):
                     my_cursor = my_conn.cursor()
                     start1 = time.time()
                     #pushing data into the database from the CSV file
-                    my_cursor.execute(''' LOAD DATA LOCAL INFILE 'C:/Users/James/Documents/GitHub/Nibbler/nibbler/trading/collectors/coins/THETA/1m/THETA1m.csv' IGNORE INTO TABLE THETA
+                    my_cursor.execute(''' LOAD DATA LOCAL INFILE '/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/THETA/1m/THETA1m.csv' IGNORE INTO TABLE THETA
                                         FIELDS TERMINATED BY ',' ENCLOSED BY '"'
                                         LINES TERMINATED BY '\r\n'
                                         IGNORE 1 LINES;''')

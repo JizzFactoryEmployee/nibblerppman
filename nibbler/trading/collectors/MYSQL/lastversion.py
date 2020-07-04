@@ -5,7 +5,9 @@ from tqdm import tqdm
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from datetime import datetime, timedelta
-import  nibbler.trading.collectors.poo as poo
+# import  nibbler.trading.collectors.poo as poo
+
+
 class MyHandler(FileSystemEventHandler):
     def __init__(self):
         self.last_modified = datetime.now()
@@ -13,7 +15,7 @@ class MyHandler(FileSystemEventHandler):
 
         event_handler = MyHandler()
         observer = Observer()
-        observer.schedule(event_handler, path=r'C:/Users/James/Documents/GitHub/Nibbler/nibbler/trading/collectors/coins/BTC/1m', recursive=False)
+        observer.schedule(event_handler, path=r'/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/BTC/1m', recursive=False)
         observer.start()
 
         try:
@@ -31,13 +33,13 @@ class MyHandler(FileSystemEventHandler):
                 print('BTC ACTIVATE GO CORN GO')
                 time.sleep(3)
                 try:
-                    data = pd.read_csv(r'C:/Users/James/Documents/GitHub/Nibbler/nibbler/trading/collectors/coins/BTC/1m/BTC1m.csv')
+                    data = pd.read_csv(r'/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/BTC/1m/BTC1m.csv')
                     print('file exists')
                 #if the file is being populated it wont be found, thus a timeout is needed while it populates
                 except FileNotFoundError:
                     print('still not here, gonna wait longer, waiting five minutes')
                     time.sleep(600)
-                    data = pd.read_csv(r'C:/Users/James/Documents/GitHub/Nibbler/nibbler/trading/collectors/coins/BTC/1m/BTC1m.csv')
+                    data = pd.read_csv(r'/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/BTC/1m/BTC1m.csv')
                     print('five minutes up')
 
                     #set up the main connection
@@ -70,7 +72,7 @@ class MyHandler(FileSystemEventHandler):
                     my_cursor = my_conn.cursor()
                     start1 = time.time()
                     #pushing data into the database from the CSV file
-                    my_cursor.execute(''' LOAD DATA LOCAL INFILE 'C:/Users/James/Documents/GitHub/Nibbler/nibbler/trading/collectors/coins/BTC/1m/BTC1m.csv' IGNORE INTO TABLE BTC
+                    my_cursor.execute(''' LOAD DATA LOCAL INFILE '/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/BTC/1m/BTC1m.csv' IGNORE INTO TABLE BTC
                                         FIELDS TERMINATED BY ',' ENCLOSED BY '"'
                                         LINES TERMINATED BY '\r\n'
                                         IGNORE 1 LINES;''')
@@ -129,49 +131,6 @@ class MyHandler(FileSystemEventHandler):
                         print('pushed', gap, 'values in:', end2-start2)
                         if y == gap:
                             print('out of the push loop')
-                            
-                # if listy != newlist:
-                #     print('uuuuu')   
-
-                # if gap == 1:
-                #     print('no data errors, going to update the last csv value')
-
-                #     pair_1 = data.pair_1.iloc[-1]
-                #     pair_2 =  data.pair_2.iloc[-1]
-                #     Date_Time = str(round(data.Date_Time.iloc[-1],0))
-                #     Open_price = str(round(data.Open_price.iloc[-1],3))
-                #     High_price = str(round(data.High_price.iloc[-1],3))
-                #     Low_price = str(round(data.Low_price.iloc[-1],3))
-                #     Close_price = str(round(data.Close_price.iloc[-1],3))
-                #     Volume = str(round(data.Volume.iloc[-1],3))
-
-                #     my_cursor = my_conn.cursor()
-                #     ppppp = time.time()
-                #     my_cursor.execute('INSERT INTO BTC VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', (pair_1, pair_2, Date_Time, Open_price, High_price, Low_price, Close_price, Volume))
-                #     my_conn.commit()
-                #     ppp = time.time()
-                #     my_cursor.close()
-                    
-                    # my_cursor = my_conn.cursor()
-                    # my_cursor.execute(''' select COUNT(*) FROM BTC; ''')
-                    # pingu = my_cursor.fetchall()
-                    # pingu = str(pingu).strip("(,)")
-                    # pingu = int(pingu)
-                    # my_cursor.close()
-                    # print('total values pushed', pingu)
-
-                    # print('we poooshed in', ppp-ppppp)
-                    
-
-                # if gap > 1:
-                #     print('something went wrong, just clear it all')
-                #     my_cursor = my_conn.cursor()
-                #     my_cursor.execute(''' DELETE FROM BTC; ''')
-                #     my_conn.commit()
-                #     my_cursor.close()
-                #     print('data has been wiped, will repopulate next update')
-            #if the result doesnt equal the data length then something is wrong
-            #deleting the database will fix this and we can repopulate it
 
                 if result > len(data):
                     print('something went wrong, database is somehow longer than the csv, deleting all')
@@ -185,10 +144,9 @@ class MyHandler(FileSystemEventHandler):
                     print('SAME LENGTH DO NOTHING')
 
                 print('Done fren')
-           
-            return
         else:
             self.last_modified = datetime.now()
     
             print(f'Event type: {event.event_type}  path : {event.src_path}')
             print(event.is_directory) # This attribute is also available
+

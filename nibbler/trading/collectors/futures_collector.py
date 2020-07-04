@@ -11,7 +11,7 @@ class BinanceBTC(Collector):
         from pathlib import Path
         import time
         import os
-        directory = Path(r'C:\Users\James\Documents\GitHub\Nibbler\nibbler\trading\collectors\coins\BTC\1m')
+        directory = Path(r'/home/nibbler/nibblerppman/nibbler/trading/collectors/coins/BTC/1m')
         timeFrame = '1m'
         filename = 'BTC%s.csv'%timeFrame
         filepath = directory/filename
@@ -439,3 +439,4 @@ class BinanceTHETA(Collector):
         collector = BinanceTHETA(timeFrame)
         collector.run_loop(filepath, timestamp='2019-06-29T00:00:00Z',  multiplier=1)
 
+BinanceBTC.BTCcollector1m()

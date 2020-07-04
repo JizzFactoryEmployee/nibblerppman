@@ -107,7 +107,7 @@ class Collector(object):
         self.all_ohlcv = []
         to_break = False
         while True:
-            time.sleep(0.7)
+            time.sleep(1.2)
 
             if isinstance(self.since, str):
                 self.since = self.exchange.parse8601(self.since)
